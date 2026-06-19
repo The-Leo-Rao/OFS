@@ -1,0 +1,422 @@
+<StartScreen>:
+    BoxLayout:
+        orientation: "horizontal"
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        Image:
+            source: "Images/mainlogo2.png"
+            pos_hint: {'center_x': 0.5}
+            size_hint: None, None
+            size: dp(150), dp(150)
+        Label:
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            Label:
+                text: "USERNAME"
+                pos_hint: {'center_x': 0.5, 'y': 0.2}
+                color: 0, 0, 0, 1
+            TextInput:
+                id: username_input
+                pos_hint: {'center_x': 0.5}
+                size_hint: None, None
+                width: dp(250)
+                height: dp(45)
+                text: ""
+                multiline: False
+                font_size: 50
+                padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+                on_text: root.check_username(self, self.text)
+            Label:
+                id: error_usr
+                pos_hint: {'center_x': 0.5}
+                size: dp(10), dp(16)
+                font_size: 20
+                color: 1, 0, 0, 1
+                text: "Invalid username. Minimum length is 5, and no numbers allowed"
+        Label:
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            Label:
+                text: "PASSWORD"
+                pos_hint: {'center_x': 0.5}
+                size: dp(100), dp(160)
+                color: 0, 0, 0, 1
+            TextInput:
+                id: password_input
+                pos_hint: {'center_x': 0.5}
+                size_hint: None, None
+                width: dp(250)
+                height: dp(45)
+                text: ""
+                multiline: False
+                padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+                font_size: 50
+                password: True
+                on_text: root.check_password(self, self.text)
+            Label:
+                id: error_passwrd
+                pos_hint: {'center_x': 0.5}
+                size: 100, 160
+                font_size: 20
+                color: 1, 0, 0, 1
+                text: "Invalid password. Minimum length is 8."
+        Label:
+        Button:
+            text: 'LOGIN'
+            pos_hint: {'center_x': 0.5}
+            size_hint: None, None
+            width: 400
+            height: 100
+            background_color: 0, 1, 0.8, 1
+            on_press: app.root.current = root.final_pass()
+        Label:
+
+<NextScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "Name of Pet"
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        TextInput:
+            id: pname_input
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            pos_hint: {'center_x': dp(0.25)}
+            text: ""
+            multiline: False
+            padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+            font_size: 50
+            on_text: root.check_petname(self, self.text)
+        Label:
+            text: "Pet Age"
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        Spinner:
+            id: first_spin
+            text: 'Select'
+            pos_hint: {'center_x': dp(0.25)}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            background_color: 0, 1, 0.8, 1
+            values: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+        Label:
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        Spinner:
+            id: second_spin
+            text: 'Select'
+            pos_hint: {'center_x': dp(0.25)}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            background_color: 0, 1, 0.8, 1
+            values: ['Indie','Golden retriever','Labrador','pug','chihuahua','poodle','Pit bull','German shepheard','Husky','Corgi','Great dane','Daschund']
+            on_text: root.spinner_selected(self, self.text, first_spin.text)
+        Label:
+            text: ''
+        Button:
+            text: 'CONTINUE'
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            pos_hint: {'center_x': dp(0.25)}
+            background_color: 0, 1, 0.8, 1
+            on_press: root.next_pass()
+        Label:
+            text: ''
+    Label:
+        id: error_pet
+        pos_hint: {'center_x': dp(0.25), 'center_y': dp(0.385)}
+        size: dp(100), dp(160)
+        font_size: 20
+        color: 1, 0, 0, 1
+        text: "Invalid Name!."
+    Label:
+        id: error_spinner
+        pos_hint: {'center_x': dp(0.25), 'center_y': dp(0.168)}
+        size: dp(100), dp(160)
+        font_size: 20
+        color: 1, 0, 0, 1
+        text: "Invalid selection"
+
+<HomePage>:
+    BoxLayout:
+        orientation: 'horizontal'
+        MDBottomNavigation:
+            id: bottom_nav
+            panel_color: 0, 0.41, 0.34, 1
+            elevation: 10
+            MDBottomNavigationItem:
+                name: 'Screen 2'
+                text: "menu"
+                icon: 'menu'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Button:
+                        text: 'Community'
+                        size_hint_x: None
+                        width: root.width
+                        background_color: 1, 0.4, 0.15, 1
+                    Button:
+                        text: 'Get information'
+                        size_hint_x: None
+                        width: root.width
+                        background_color: 1, 1, 1, 1
+                        background_normal: ''
+                        color: 0, 0, 0, 1
+                        on_press: root.info_pass()
+                    Button:
+                        text: 'Adopt'
+                        size_hint_x: None
+                        width: root.width
+                        background_color: 1, 0.4, 0.15, 1
+                    Button:
+                        text: 'Settings'
+                        size_hint_x: None
+                        width: root.width
+                        background_color: 1, 1, 1, 1
+                        background_normal: ''
+                        color: 0, 0, 0, 1
+                        on_press: root.Settings_pass()
+            MDBottomNavigationItem:
+                name: 'Screen 1'
+                text: "Home"
+                icon: 'home'
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        id: welcome_label
+                        pos_hint: {'center_x': dp(0.25)}
+                        size: dp(100), dp(160)
+                        color: 0, 0, 0, 1
+                        font_size: dp(60)
+                    Label:
+                        pos_hint: {'center_x': dp(0.25),'y': dp(0.5)}
+                        text: 'General Information'
+                        size: dp(100), dp(160)
+                        color: 0, 0, 0, 1
+                        font_size: dp(25)
+                    Label:
+                        id: pet_name_label
+                        pos_hint: {'center_x': dp(0.25), 'center_y': dp(0.1)}
+                        size: dp(100), dp(160)
+                        color: 0, 0, 0, 1
+                        font_size: dp(15)
+                    Label:
+                        id: pet_age_label
+                        pos_hint: {'center_x': dp(0.25)}
+                        size: dp(100), dp(160)
+                        color: 0, 0, 0, 1
+                        font_size: dp(15)
+                    Label:
+                        id: pet_breed_label
+                        pos_hint: {'center_x': dp(0.25)}
+                        size: dp(100), dp(160)
+                        color: 0, 0, 0, 1
+                        font_size: dp(15)
+                    Label:
+                        size: dp(100), dp(160)
+            MDBottomNavigationItem:
+                name: 'Screen 3'
+                text: "calendar"
+                icon: 'calendar'
+
+<Getinfo>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: 'information '
+            md_bg_color: 0, 0.41, 0.34, 1
+            elevation: 5
+            left_action_items: [["home", lambda x: root.on_plus_button_press()]]
+        ScrollView:
+            Label:
+                id: info_label
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                font_size: dp(25)
+                color: 0, 0, 0, 1
+                text: root.info_text
+
+<Settings>:
+    FloatLayout:
+        orientation: "horizontal"
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: 'Settings'
+            md_bg_color: 0, 0.41, 0.34, 1
+            elevation: 5
+            left_action_items: [["home", lambda x: root.on_plus_button_press_2()]]
+    FloatLayout:
+        Button:
+            text: "CHANGE PASSWORD"
+            size_hint: None, None
+            width: 1000
+            height: 100
+            pos_hint: {'center_x': 0.5, 'y': 0.45}
+            size: dp(200), dp(80)
+            background_color: 0, 1, 0.8, 1
+            on_press: app.root.current = root.Change1_pass()
+        Button:
+            text: "CHANGE PET DETAILS"
+            size_hint: None, None
+            width: 1000
+            height: 100
+            pos_hint: {'center_x': 0.5, 'y': 0.25}
+            size: dp(200), dp(80)
+            background_color: 0, 1, 0.8, 1
+            on_press: app.root.current = root.Change2_pass()
+
+<Change1>:
+    BoxLayout:
+        orientation: "horizontal"
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+    FloatLayout:
+        Label:
+            pos_hint: {'x': 0, 'y': 0.4}
+            text: "CHANGE PASSWORD"
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        TextInput:
+            id: changepassword_input
+            pos_hint: {'x': 0.35, 'y': 0.75}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            text: ""
+            multiline: False
+            padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+            font_size: 50
+            password: True
+            on_text: root.check_changepassword(self, self.text)
+        Label:
+            id: error_passwrd0
+            pos_hint: {'x': 0, 'y': 0.2}
+            size: 100, 160
+            font_size: 20
+            color: 1, 0, 0, 1
+            text: "Invalid password. Minimum length is 8."
+        Label:
+            pos_hint: {'x': 0, 'y': 0.1}
+            text: "VERIFY PASSWORD"
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        TextInput:
+            id: verifypassword_input
+            pos_hint: {'x': 0.35, 'y': 0.45}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            text: ""
+            multiline: False
+            padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+            font_size: 50
+            password: True
+            on_text: root.check_verifypassword(self, self.text)
+        Label:
+            id: error_passwrd1
+            pos_hint: {'x': 0, 'y': -0.1}
+            size: 100, 160
+            font_size: 20
+            color: 1, 0, 0, 1
+            text: "Password doesn't match."
+        Button:
+            text: 'CONFIRM PASSWORD'
+            size_hint: None, None
+            width: 400
+            height: 100
+            pos_hint: {'x': 0.38, 'y': 0.2}
+            background_color: 0, 1, 0.8, 1
+            on_press: app.root.current = root.Change1()
+
+<Change2>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "Name of Pet"
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        TextInput:
+            id: pname_input
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            pos_hint: {'center_x': 0.5}
+            text: ""
+            multiline: False
+            padding_x: (self.width - self._get_text_width(str(self.text), self.tab_width, self._label_cached)) / 2
+            font_size: 50
+            on_text: root.check_petname(self, self.text)
+        Label:
+            text: "Pet Age"
+            pos_hint: {'center_x': 0.5}
+            size: dp(100), dp(160)
+            color: 0, 0, 0, 1
+        Spinner:
+            id: first_spin
+            text: 'Select'
+            pos_hint: {'center_x': 0.5}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            background_color: 0, 1, 0.8, 1
+            values: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+        Label:
+            size: 100, 160
+            color: 0, 0, 0, 1
+        Spinner:
+            id: second_spin
+            text: 'Select'
+            pos_hint: {'center_x': 0.5}
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            background_color: 0, 1, 0.8, 1
+            values: ['Indie','Golden retriever','Labrador','pug','chihuahua','poodle','Pit bull','German shepheard','Husky','Corgi','Great dane','Daschund']
+            on_text: root.spinner_selected(self, self.text, first_spin.text)
+        Label:
+            text: ''
+        Button:
+            text: 'CHANGE DETAILS'
+            size_hint: None, None
+            width: dp(250)
+            height: dp(45)
+            pos_hint: {'center_x': 0.5}
+            background_color: 0, 1, 0.8, 1
+            on_press: root.Change2()
+        Label:
+            text: ''
+    FloatLayout:
+        Label:
+            id: error_pet
+            pos_hint: {'center_x': 0.5, 'center_y': dp(0.385)}
+            size: dp(100), dp(160)
+            font_size: 20
+            color: 1, 0, 0, 1
+            text: "Invalid Name!."
+        Label:
+            id: error_spinner
+            pos_hint: {'center_x': 0.5, 'center_y': dp(0.168)}
+            size: dp(100), dp(160)
+            font_size: 20
+            color: 1, 0, 0, 1
+            text: "Invalid selection"
